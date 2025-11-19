@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Cookie Page</title>
+  <script>
+    function setCookie(name, value, days) {
+      const d = new Date();
+      d.setTime(d.getTime() + days*24*60*60*1000);
+      document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
+    }
+
+    function getCookie(name) {
+      const key = name + "=";
+      const parts = document.cookie.split(";");
+      for (let i = 0; i < parts.length; i++) {
+        let c = parts[i].trim();
+        if (c.indexOf(key) === 0) {
+          return c.substring(key.length);
+        }
+      }
+      return "";
+    }
+
+    function showCookie() {
+      let value = getCookie("myCookie");
+
+      // If cookie not set, ask user once
+      if (value === "") {
+        value = prompt("Enter a value to store in a cookie:");
+        if (value) {
+          setCookie("myCookie", value, 7); // lasts 7 days
+        }
+      }
+
+      // Show cookie value (if any)
+      document.getElementById("cookieBox").textContent =
+        value ? "Cookie value: " + value : "No cookie set.";
+    }
+  </script>
+</head>
+
+<body onload="showCookie()">
+  <h1>Cookie Demo</h1>
+
+  <p id="cookieBox">Loading...</p>
+
+  <footer>
+    &copy; 2025 Gabriel Siqueira
+  </footer>
+</body>
+</html>
